@@ -28408,11 +28408,11 @@ const LoginView = ({ onLoggedIn  })=>{
     const [username, setUsername] = (0, _react.useState)("");
     const [password, setPassword] = (0, _react.useState)("");
     const handleSubmit = (event)=>{
-        // this prevents the default behavior of the form, to reload the entire page
+        // this prevents the default behavior of the form to reload the entire page
         event.preventDefault();
         const data = {
-            access: username,
-            secret: password
+            Username: username,
+            Password: password
         };
         fetch("https://cf-movie-api.herokuapp.com/login", {
             method: "POST",
@@ -28421,7 +28421,6 @@ const LoginView = ({ onLoggedIn  })=>{
             },
             body: JSON.stringify(data)
         }).then((response)=>response.json()).then((data)=>{
-            console.log("Login response: ", data);
             if (data.user) {
                 localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("token", data.token);
@@ -28445,13 +28444,13 @@ const LoginView = ({ onLoggedIn  })=>{
                         minLength: "4"
                     }, void 0, false, {
                         fileName: "src/components/LoginView/LoginView.jsx",
-                        lineNumber: 43,
+                        lineNumber: 42,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/LoginView/LoginView.jsx",
-                lineNumber: 41,
+                lineNumber: 40,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -28465,13 +28464,13 @@ const LoginView = ({ onLoggedIn  })=>{
                         minLength: "4"
                     }, void 0, false, {
                         fileName: "src/components/LoginView/LoginView.jsx",
-                        lineNumber: 53,
+                        lineNumber: 52,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/LoginView/LoginView.jsx",
-                lineNumber: 51,
+                lineNumber: 50,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -28479,13 +28478,13 @@ const LoginView = ({ onLoggedIn  })=>{
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/LoginView/LoginView.jsx",
-                lineNumber: 61,
+                lineNumber: 60,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/LoginView/LoginView.jsx",
-        lineNumber: 40,
+        lineNumber: 39,
         columnNumber: 5
     }, undefined);
 };

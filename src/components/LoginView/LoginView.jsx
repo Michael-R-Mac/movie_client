@@ -5,12 +5,12 @@ export const LoginView = ({ onLoggedIn }) => {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
-    // this prevents the default behavior of the form, to reload the entire page
+    // this prevents the default behavior of the form to reload the entire page
     event.preventDefault();
 
     const data = {
-      access: username,
-      secret: password
+      Username: username,
+      Password: password
     };
 
     fetch("https://cf-movie-api.herokuapp.com/login", {
@@ -22,7 +22,6 @@ export const LoginView = ({ onLoggedIn }) => {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Login response: ", data);
       if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("token", data.token);
