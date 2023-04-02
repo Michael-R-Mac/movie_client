@@ -1,5 +1,14 @@
-$color: steelblue;
+$primary: LightGray;
+$body-bg: Azure;
 
-.my-flix {
-  color: $color;
+@import "~bootstrap/scss/bootstrap.scss";
+
+.back-button {
+  padding: 4px 12px 4px 12px;
+  margin: 5px;
+  color: black;
+  background-color: LightGray;
+  border: none;
+  text-decoration: none;
+  border-radius: 4px;
 }
