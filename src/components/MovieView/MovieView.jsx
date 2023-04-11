@@ -1,28 +1,34 @@
-export const MovieView = ({ movie, onBackClick }) => {
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
+
+  const SeeMovie = movies.find((m) => m.id === movieId);
   return (
     <div>
       <div>
-        <img src={movie.Image} style={{ width: "100%" }} />
+        <img src={SeeMovie.Image} style={{ width: "100%" }} />
       </div>
       <div>
         <span>Title: </span>
-        <span>{movie.Title}</span>
+        <span>{SeeMovie.Title}</span>
       </div>
       <div>
         <span>Description: </span>
-        <span>{movie.Description}</span>
+        <span>{SeeMovie.Description}</span>
       </div>
       <div>
         <span>Genre: </span>
-        <span>{movie.Genre}</span>
+        <span>{SeeMovie.Genre}</span>
       </div>
       <div>
         <span>Director: </span>
-        <span>{movie.Director}</span>
+        <span>{SeeMovie.Director}</span>
       </div>
-      <button onClick={onBackClick} className="back-button">
-        Back to Main View
-      </button>
+      <Link to={`/`}>
+        <button className="back-button">Back</button>
+      </Link>
     </div>
   );
 };
