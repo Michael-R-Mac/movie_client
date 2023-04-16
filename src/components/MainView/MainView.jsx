@@ -13,11 +13,14 @@ export const MainView = () => {
   const storedToken = localStorage.getItem("token");
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     if (!token) return;
     fetch("https://cf-movie-api.herokuapp.com/movies", {
+      headers: { Authorization: `Bearer ${token}` },
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
@@ -29,6 +32,7 @@ export const MainView = () => {
             Genre: doc.Genre.Name,
             Director: doc.Director.Name,
             Image: doc.ImagePath,
+            id: doc._id,
             id: doc._id,
           };
         });
