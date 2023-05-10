@@ -1,8 +1,10 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export const MovieView = ({ movies }) => {
+export const MovieView = () => {
   const { movieId } = useParams();
+  const movies = useSelector((state) => state.movies.list);
 
   const SeeMovie = movies.find((m) => m.id === movieId);
   return (

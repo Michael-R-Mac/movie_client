@@ -1,13 +1,8 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useParams } from "react-router";
 
-export const ProfileView = ({ movies, user }) => {
-  const { UserUsername } = useParams();
-
-  const SeeUser = user.find((u) => u.username === UserUsername);
-
+export const ProfileView = ({ user, movies }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -71,9 +66,9 @@ export const ProfileView = ({ movies, user }) => {
   return (
     <>
       <div>
-        <p>User: {SeeUser.Username}</p>
-        <p>Email: {SeeUser.Email}</p>
-        <p>Birthday: {SeeUser.Birthday}</p>
+        <p>User: {user.Username}</p>
+        <p>Email: {user.Email}</p>
+        <p>Birthday: {user.Birthday}</p>
         <h2>Favorite movies:</h2>
         <li> {favoriteMovies}</li>
       </div>
