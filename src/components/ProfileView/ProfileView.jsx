@@ -1,9 +1,13 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useSelector } from "react-redux";
+import { FavoriteMoviesView } from "../FavoriteMovies/FavoriteMovies";
 
 export const ProfileView = ({ user, movies }) => {
+  const token = useSelector((state) => state.token);
   const [username, setUsername] = useState("");
+  const [UsernameToDelete, setUsernameToDelete] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
@@ -22,13 +26,12 @@ export const ProfileView = ({ user, movies }) => {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
-        headers: { Authorization: `Bearer ${token}` },
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     }).then((response) => {
       if (response.ok) {
         alert("Update successful");
-        window.location.reload();
       } else {
         alert("Update failed");
       }
@@ -39,29 +42,24 @@ export const ProfileView = ({ user, movies }) => {
     event.preventDefault();
 
     const data = {
-      Username: username,
+      Username: UsernameToDelete,
     };
 
     fetch("https://cf-movie-api.herokuapp.com/users/${user.username}", {
-      method: "DELETE",
+      method: "PUT",
       body: JSON.stringify(data),
       headers: {
-        headers: { Authorization: `Bearer ${token}` },
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     }).then((response) => {
       if (response.ok) {
         alert("Delete successful");
-        window.location.reload();
       } else {
         alert("Delete failed");
       }
     });
   };
-
-  let favoriteMovies = movies.filter((m) =>
-    user.FavoriteMovies.includes(m._id)
-  );
 
   return (
     <>
@@ -69,8 +67,8 @@ export const ProfileView = ({ user, movies }) => {
         <p>User: {user.Username}</p>
         <p>Email: {user.Email}</p>
         <p>Birthday: {user.Birthday}</p>
-        <h2>Favorite movies:</h2>
-        <li> {favoriteMovies}</li>
+        <h2>Favorite movies</h2>
+        <FavoriteMoviesView />
       </div>
       <>
         <Form onSubmit={HandleUpdate}>
@@ -121,16 +119,19 @@ export const ProfileView = ({ user, movies }) => {
         </Form>
 
         <Form onSubmit={HandleDelete}>
-          <Form.Group controlId="formUsername">
+          <Form.Group controlId="formUsernameToDelete">
             <Form.Label>Username to delete:</Form.Label>
             <Form.Control
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={UsernameToDelete}
+              onChange={(e) => setUsernameToDelete(e.target.value)}
               required
               minLength="4"
             />
           </Form.Group>
+          <Button className="m-3" variant="primary" type="submit">
+            Submit
+          </Button>
         </Form>
       </>
     </>
