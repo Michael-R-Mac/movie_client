@@ -1,5 +1,7 @@
 import Container from "react-bootstrap/Container";
 import { createRoot } from "react-dom/client";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 import { MainView } from "./components/MainView/MainView";
 
 // Import statement to indicate that you need to bundle `./index.scss`
@@ -8,9 +10,11 @@ import "./index.scss";
 // Main component (will eventually use all the others)
 const MovieApp = () => {
   return (
-    <Container>
-      <MainView />
-    </Container>
+    <Provider store={store}>
+      <Container>
+        <MainView />
+      </Container>
+    </Provider>
   );
 };
 

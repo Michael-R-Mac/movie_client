@@ -1,13 +1,12 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useParams } from "react-router";
+import { useSelector } from "react-redux";
+import { FavoriteMoviesView } from "../FavoriteMovies/FavoriteMovies";
 
-export const ProfileView = ({ movies, user }) => {
-  const { UserUsername } = useParams();
-
-  const SeeUser = user.find((u) => u.username === UserUsername);
-
+export const ProfileView = () => {
+  const token = useSelector((state) => state.token);
+  const user = useSelector((state) => state.user);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -27,13 +26,12 @@ export const ProfileView = ({ movies, user }) => {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
-        headers: { Authorization: `Bearer ${token}` },
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     }).then((response) => {
       if (response.ok) {
         alert("Update successful");
-        window.location.reload();
       } else {
         alert("Update failed");
       }
@@ -43,15 +41,10 @@ export const ProfileView = ({ movies, user }) => {
   const HandleDelete = (event) => {
     event.preventDefault();
 
-    const data = {
-      Username: username,
-    };
-
-    fetch("https://cf-movie-api.herokuapp.com/users/${user.username}", {
+    fetch("https://cf-movie-api.herokuapp.com/users/${user.Username}", {
       method: "DELETE",
-      body: JSON.stringify(data),
       headers: {
-        headers: { Authorization: `Bearer ${token}` },
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     }).then((response) => {
@@ -64,23 +57,21 @@ export const ProfileView = ({ movies, user }) => {
     });
   };
 
-  let favoriteMovies = movies.filter((m) =>
-    user.FavoriteMovies.includes(m._id)
-  );
-
   return (
     <>
       <div>
-        <p>User: {SeeUser.Username}</p>
-        <p>Email: {SeeUser.Email}</p>
-        <p>Birthday: {SeeUser.Birthday}</p>
-        <h2>Favorite movies:</h2>
-        <li> {favoriteMovies}</li>
+        <p>User: {user.Username}</p>
+        <p>Email: {user.Email}</p>
+        <p>Birthday: {user.Birthday}</p>
+        <h2>Favorite movies</h2>
+        <div>
+          <FavoriteMoviesView />
+        </div>
       </div>
       <>
         <Form onSubmit={HandleUpdate}>
           <Form.Group controlId="formUsername">
-            <Form.Label>Username:</Form.Label>
+            <Form.Label>Username to Update:</Form.Label>
             <Form.Control
               type="text"
               value={username}
@@ -124,19 +115,9 @@ export const ProfileView = ({ movies, user }) => {
             Submit
           </Button>
         </Form>
-
-        <Form onSubmit={HandleDelete}>
-          <Form.Group controlId="formUsername">
-            <Form.Label>Username to delete:</Form.Label>
-            <Form.Control
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              minLength="4"
-            />
-          </Form.Group>
-        </Form>
+        <Button label="Delete" onClick={HandleDelete}>
+          Delete user
+        </Button>
       </>
     </>
   );
