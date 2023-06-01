@@ -15,15 +15,15 @@ export const MoviesList = () => {
   );
   return (
     <>
-      <Row className="m-3" md={5}>
+      <Row className="m-3" sm={3}>
         <MoviesFilter />
       </Row>
-      <Row className="m-3" md={5}>
+      <Row className="m-3" sm={3}>
         {movies.length === 0 ? (
           <Col>The list is empty!</Col>
         ) : (
           filteredMovies.map((movie) => (
-            <Col className="mb-3" key={movie.id} md={3}>
+            <Col className="mb-2" key={movie.id} md={3}>
               <MovieCard movie={movie} />
             </Col>
           ))

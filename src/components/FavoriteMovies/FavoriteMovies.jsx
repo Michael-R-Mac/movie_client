@@ -6,12 +6,13 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { setFavorite } from "../../redux/reducers/FavoriteMovies";
 
-export const FavoriteMoviesView = (user) => {
+export const FavoriteMoviesView = () => {
+  const user = useSelector((state) => state.user);
   const movies = useSelector((state) => state.movies.list);
+  const Favorite = useSelector((state) => state.Favorite.list);
   const filter = useSelector((state) => state.movies.filter)
     .trim()
     .toLowerCase();
-  const Favorite = useSelector((state) => state.Favorite.list);
   const dispatch = useDispatch();
   useEffect(() => {
     const filteredMovies = movies.filter((movies) =>
@@ -21,12 +22,12 @@ export const FavoriteMoviesView = (user) => {
   }, []);
   return (
     <>
-      <Row className="m-3" md={5}>
+      <Row className="justify-content-md-center">
         {movies.length === 0 ? (
           <Col>The list is empty!</Col>
         ) : (
           Favorite.map((movie) => (
-            <Col className="mb-3" key={movie.id} md={3}>
+            <Col key={movie.id} className="m-3" sm={5}>
               <MovieCard movie={movie} />
             </Col>
           ))

@@ -4,10 +4,10 @@ import Form from "react-bootstrap/Form";
 import { useSelector } from "react-redux";
 import { FavoriteMoviesView } from "../FavoriteMovies/FavoriteMovies";
 
-export const ProfileView = ({ user, movies }) => {
+export const ProfileView = () => {
   const token = useSelector((state) => state.token);
+  const user = useSelector((state) => state.user);
   const [username, setUsername] = useState("");
-  const [UsernameToDelete, setUsernameToDelete] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
@@ -41,13 +41,8 @@ export const ProfileView = ({ user, movies }) => {
   const HandleDelete = (event) => {
     event.preventDefault();
 
-    const data = {
-      Username: UsernameToDelete,
-    };
-
-    fetch("https://cf-movie-api.herokuapp.com/users/${user.username}", {
-      method: "PUT",
-      body: JSON.stringify(data),
+    fetch("https://cf-movie-api.herokuapp.com/users/${user.Username}", {
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -55,6 +50,7 @@ export const ProfileView = ({ user, movies }) => {
     }).then((response) => {
       if (response.ok) {
         alert("Delete successful");
+        window.location.reload();
       } else {
         alert("Delete failed");
       }
@@ -68,12 +64,14 @@ export const ProfileView = ({ user, movies }) => {
         <p>Email: {user.Email}</p>
         <p>Birthday: {user.Birthday}</p>
         <h2>Favorite movies</h2>
-        <FavoriteMoviesView />
+        <div>
+          <FavoriteMoviesView />
+        </div>
       </div>
       <>
         <Form onSubmit={HandleUpdate}>
           <Form.Group controlId="formUsername">
-            <Form.Label>Username:</Form.Label>
+            <Form.Label>Username to Update:</Form.Label>
             <Form.Control
               type="text"
               value={username}
@@ -117,22 +115,9 @@ export const ProfileView = ({ user, movies }) => {
             Submit
           </Button>
         </Form>
-
-        <Form onSubmit={HandleDelete}>
-          <Form.Group controlId="formUsernameToDelete">
-            <Form.Label>Username to delete:</Form.Label>
-            <Form.Control
-              type="text"
-              value={UsernameToDelete}
-              onChange={(e) => setUsernameToDelete(e.target.value)}
-              required
-              minLength="4"
-            />
-          </Form.Group>
-          <Button className="m-3" variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
+        <Button label="Delete" onClick={HandleDelete}>
+          Delete user
+        </Button>
       </>
     </>
   );
