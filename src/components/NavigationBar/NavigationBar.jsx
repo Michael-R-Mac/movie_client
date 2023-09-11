@@ -32,7 +32,7 @@ export const NavigationBar = () => {
                 <Nav.Link as={Link} to="/">
                   Home
                 </Nav.Link>
-                <Nav.Link as={Link} to="/users/${user.username}">
+                <Nav.Link as={Link} to={`/users/${user.username}`}>
                   Profile
                 </Nav.Link>
                 <Nav.Link

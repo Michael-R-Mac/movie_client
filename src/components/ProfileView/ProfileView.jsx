@@ -3,10 +3,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useSelector } from "react-redux";
 import { FavoriteMoviesView } from "../FavoriteMovies/FavoriteMovies";
+import { setUser } from "../../redux/reducers/user";
 
-export const ProfileView = () => {
+export const ProfileView = ({ user, updateUser }) => {
   const token = useSelector((state) => state.token);
-  const user = useSelector((state) => state.user);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -22,26 +22,28 @@ export const ProfileView = () => {
       Birthday: birthday,
     };
 
-    fetch("https://cf-movie-api.herokuapp.com/users/${user.username}", {
+    fetch(`https://cf-movie-api.herokuapp.com/users/${user.username}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-    }).then((response) => {
-      if (response.ok) {
+    })
+      .then((response) => response.json())
+      .then((response) => {
         alert("Update successful");
-      } else {
-        alert("Update failed");
-      }
-    });
+        updateUser(response.user);
+      })
+      .catch((e) => {
+        alert("Something went wrong");
+      });
   };
 
   const HandleDelete = (event) => {
     event.preventDefault();
 
-    fetch("https://cf-movie-api.herokuapp.com/users/${user.Username}", {
+    fetch(`https://cf-movie-api.herokuapp.com/users/${user.Username}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

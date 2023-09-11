@@ -16,6 +16,11 @@ export const MainView = () => {
   const movies = useSelector((state) => state.movies.list);
   const dispatch = useDispatch();
 
+  const updateUser = (user) => {
+    dispatch(setUser(user));
+    localStorage.setItem("user", JSON.stringify(user));
+  };
+
   useEffect(() => {
     if (!token) return;
     fetch("https://cf-movie-api.herokuapp.com/movies", {
