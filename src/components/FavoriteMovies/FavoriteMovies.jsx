@@ -6,7 +6,8 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { setFavorite } from "../../redux/reducers/FavoriteMovies";
 
-export const FavoriteMoviesView = ({ user }) => {
+export const FavoriteMoviesView = () => {
+  const user = useSelector((state) => state.user);
   const movies = useSelector((state) => state.movies.list);
   const Favorite = useSelector((state) => state.Favorite.list);
   const filter = useSelector((state) => state.movies.filter)

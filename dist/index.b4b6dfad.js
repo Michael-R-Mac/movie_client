@@ -49318,8 +49318,9 @@ var _row = require("react-bootstrap/Row");
 var _rowDefault = parcelHelpers.interopDefault(_row);
 var _favoriteMovies = require("../../redux/reducers/FavoriteMovies");
 var _s = $RefreshSig$();
-const FavoriteMoviesView = ({ user  })=>{
+const FavoriteMoviesView = ()=>{
     _s();
+    const user = (0, _reactRedux.useSelector)((state)=>state.user);
     const movies = (0, _reactRedux.useSelector)((state)=>state.movies.list);
     const Favorite = (0, _reactRedux.useSelector)((state)=>state.Favorite.list);
     const filter = (0, _reactRedux.useSelector)((state)=>state.movies.filter).trim().toLowerCase();
@@ -49335,7 +49336,7 @@ const FavoriteMoviesView = ({ user  })=>{
                 children: "The list is empty!"
             }, void 0, false, {
                 fileName: "src/components/FavoriteMovies/FavoriteMovies.jsx",
-                lineNumber: 26,
+                lineNumber: 27,
                 columnNumber: 11
             }, undefined) : Favorite.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                     className: "m-3",
@@ -49344,23 +49345,24 @@ const FavoriteMoviesView = ({ user  })=>{
                         movie: movie
                     }, void 0, false, {
                         fileName: "src/components/FavoriteMovies/FavoriteMovies.jsx",
-                        lineNumber: 30,
+                        lineNumber: 31,
                         columnNumber: 15
                     }, undefined)
                 }, movie.id, false, {
                     fileName: "src/components/FavoriteMovies/FavoriteMovies.jsx",
-                    lineNumber: 29,
+                    lineNumber: 30,
                     columnNumber: 13
                 }, undefined))
         }, void 0, false, {
             fileName: "src/components/FavoriteMovies/FavoriteMovies.jsx",
-            lineNumber: 24,
+            lineNumber: 25,
             columnNumber: 7
         }, undefined)
     }, void 0, false);
 };
-_s(FavoriteMoviesView, "kqS/vU9UAJ1BeNtVtPEPipZclHE=", false, function() {
+_s(FavoriteMoviesView, "/GP3GJICPm83RW1WvtXZ2zDgpUQ=", false, function() {
     return [
+        (0, _reactRedux.useSelector),
         (0, _reactRedux.useSelector),
         (0, _reactRedux.useSelector),
         (0, _reactRedux.useSelector),
