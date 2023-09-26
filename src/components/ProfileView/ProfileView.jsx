@@ -1,12 +1,14 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FavoriteMoviesView } from "../FavoriteMovies/FavoriteMovies";
 import { setUser } from "../../redux/reducers/user";
 
-export const ProfileView = ({ user, updateUser }) => {
+export const ProfileView = () => {
+  const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -22,7 +24,7 @@ export const ProfileView = ({ user, updateUser }) => {
       Birthday: birthday,
     };
 
-    fetch(`https://cf-movie-api.herokuapp.com/users/${user.username}`, {
+    fetch(`https://cf-movie-api.herokuapp.com/users/${user.Username}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
@@ -30,13 +32,17 @@ export const ProfileView = ({ user, updateUser }) => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
       .then((response) => {
-        alert("Update successful");
-        updateUser(response.user);
+        if (response.ok) {
+          return response.json();
+        } else {
+          alert("Delete failed");
+        }
       })
-      .catch((e) => {
-        alert("Something went wrong");
+      .then((user) => {
+        alert("Update successful");
+        dispatch(setUser(user));
+        localStorage.setItem("user", JSON.stringify(user));
       });
   };
 
